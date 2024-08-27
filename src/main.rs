@@ -32,8 +32,8 @@ pub enum Error {
     InvalidDomainInfo(usize, u16, usize),
     #[error("Invalid MMIO {0:} Address {1:?}")]
     InvalidMmioAddr(&'static str, u64),
-    #[error("MMIO Legacy not supported by Guest")]
-    MmioLegacyNotSupported,
+    #[error("Virtio Legacy not supported by Guest")]
+    VirtioLegacyNotSupported,
     #[error("Invalid feature select {0:}")]
     InvalidFeatureSel(u32),
     #[error("Invalid MMIO direction {0:}")]
@@ -64,6 +64,10 @@ pub enum Error {
     XBInvalidState,
     #[error("Failed to kick backend: {0:?}")]
     EventFdWriteFailed(io::Error),
+    #[error("Invalid request type: {0:x}")]
+    InvalidReqType(u8),
+    #[error("Invalid size: {0:x}")]
+    InvalidSize(u8),
 }
 
 fn main() -> Result<()> {
