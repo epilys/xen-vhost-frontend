@@ -128,6 +128,7 @@ impl XenDevice {
             interrupt: Mutex::new(None),
         });
 
+        dev.mmio.lock().unwrap().setup_vmsg_events(dev.clone())?;
         *dev.interrupt.lock().unwrap() = Some(XenInterrupt::new(dev.clone()));
         Ok(dev)
     }
