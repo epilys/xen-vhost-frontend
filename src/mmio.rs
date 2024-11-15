@@ -137,14 +137,30 @@ struct GetVqueue {
 #[repr(C, packed)]
 struct GetVqueueResp {
     index: u32,
-    max_size: u64,
+    max_size: u32,
+    size: u32,
+    descriptor_addr: u64,
+    driver_addr: u64,
+    device_addr: u64,
 }
 
 #[derive(Copy, Clone, Default)]
 #[repr(C, packed)]
 struct SetVqueue {
     index: u32,
-    size: u64,
+    unused: u32,
+    size: u32,
+    descriptor_addr: u64,
+    driver_addr: u64,
+    device_addr: u64,
+}
+
+#[derive(Copy, Clone, Default)]
+#[repr(C, packed)]
+struct SetVqueueResp {
+    index: u32,
+    unused: u32,
+    size: u32,
     descriptor_addr: u64,
     driver_addr: u64,
     device_addr: u64,
@@ -169,8 +185,8 @@ struct EventConfig {
 #[repr(C, packed)]
 struct EventAvail {
     index: u32,
-    next_offset: u64,
-    next_wrap: u64,
+    next_offset: u32,
+    next_wrap: u32,
 }
 
 #[derive(Copy, Clone, Default)]
