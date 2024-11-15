@@ -365,19 +365,7 @@ impl XenMmio {
         Ok(())
     }
 
-    fn io_write(&mut self, ioreq: &mut ioreq, dev: &XenDevice, offset: u64) -> Result<()> {
-        let index = (offset / 8) as usize;
-
-        unsafe {
-            let ptr = &mut self.request as *mut VirtioMsg as *mut u64;
-            *ptr.add(index) = ioreq.data;
-        }
-
-        // Ignore the first four writes, act only after the whole request is written.
-        if index != 4 {
-            return Ok(());
-        }
-
+    fn handle_virtio_msg(&mut self, dev: &XenDevice) -> Result<()> {
         if self.request._type != 0 {
             return Err(Error::InvalidReqType(self.request._type));
         }
@@ -540,6 +528,22 @@ impl XenMmio {
         }
 
         Ok(())
+    }
+
+    fn io_write(&mut self, ioreq: &mut ioreq, dev: &XenDevice, offset: u64) -> Result<()> {
+        let index = (offset / 8) as usize;
+
+        unsafe {
+            let ptr = &mut self.request as *mut VirtioMsg as *mut u64;
+            *ptr.add(index) = ioreq.data;
+        }
+
+        // Ignore the first four writes, act only after the whole request is written.
+        if index != 4 {
+            return Ok(());
+        }
+
+        self.handle_virtio_msg(dev)
     }
 
     fn sort_regions(&mut self) {
