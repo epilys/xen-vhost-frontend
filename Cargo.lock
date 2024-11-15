@@ -306,7 +306,7 @@ dependencies = [
 [[package]]
 name = "vhost-user-frontend"
 version = "0.1.0"
-source = "git+https://github.com/vireshk/vhost?branch=frontend/stable#abf248531a582d8b04db8cd501d9e5429062e869"
+source = "git+https://github.com/vireshk/vhost?branch=frontend/stable#6772b0a4f3cdd95de5a84f39b7fc7be3c23679ea"
 dependencies = [
  "epoll",
  "libc",
@@ -453,12 +453,12 @@ checksum = "ed94fce61571a4006852b7389a063ab983c02eb1bb37b47f8272ce92d06d9538"
 [[package]]
 name = "xen-bindings"
 version = "0.1.0"
-source = "git+https://github.com/mathieupoirier/xen-sys#8a234c94a5b595e672f9019b2524ee5a98a037a7"
+source = "git+https://github.com/mathieupoirier/xen-sys#b7494ae31a8583ba4dda38f031233e9d2f20c904"
 
 [[package]]
 name = "xen-ioctls"
 version = "0.1.0"
-source = "git+https://github.com/mathieupoirier/xen-sys#8a234c94a5b595e672f9019b2524ee5a98a037a7"
+source = "git+https://github.com/mathieupoirier/xen-sys#b7494ae31a8583ba4dda38f031233e9d2f20c904"
 dependencies = [
  "libc",
  "vmm-sys-util",
@@ -468,7 +468,7 @@ dependencies = [
 [[package]]
 name = "xen-store"
 version = "0.1.0"
-source = "git+https://github.com/mathieupoirier/xen-sys#8a234c94a5b595e672f9019b2524ee5a98a037a7"
+source = "git+https://github.com/mathieupoirier/xen-sys#b7494ae31a8583ba4dda38f031233e9d2f20c904"
 dependencies = [
  "libc",
  "nix",
