@@ -29,16 +29,18 @@ impl XenForeignMemory {
 
     pub fn map_resource(&mut self, domid: u16, id: ioservid_t) -> Result<()> {
         let paddr = ptr::null_mut::<c_void>();
-        let resource_handle = xenforeignmemory_map_resource(
-            domid,
-            XENMEM_resource_ioreq_server,
-            id as u32,
-            1,
-            1,
-            paddr,
-            libc::PROT_READ | libc::PROT_WRITE,
-            0,
-        )
+        let resource_handle = unsafe {
+            xenforeignmemory_map_resource(
+                domid,
+                XENMEM_resource_ioreq_server,
+                id as u32,
+                1,
+                1,
+                paddr,
+                libc::PROT_READ | libc::PROT_WRITE,
+                0,
+            )
+        }
         .map_err(Error::XenIoctlError)?;
 
         let offset = offset_of!(shared_iopage => vcpu_ioreq).get_byte_offset();
@@ -51,7 +53,7 @@ impl XenForeignMemory {
 
     fn unmap_resource(&mut self) -> Result<()> {
         if let Some(res) = &self.res {
-            xenforeignmemory_unmap_resource(res).map_err(Error::XenIoctlError)?;
+            unsafe { xenforeignmemory_unmap_resource(res) }.map_err(Error::XenIoctlError)?;
             self.res = None;
         }
 
